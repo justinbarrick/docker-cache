@@ -12,7 +12,7 @@ pipeline:
     image: alpine
     commands:
       - ls /var/lib/docker
-      - ls hello/ || :
+      - "ls hello/ || :"
       - mkdir hello
       - echo hi > hello/hi
     volumes:
