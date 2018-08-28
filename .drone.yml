@@ -9,6 +9,13 @@ pipeline:
     volumes:
       - drone-cache:/var/lib/docker
 
+  test:
+    image: alpine
+    commands:
+      - ls /var/lib/docker
+    volumes:
+      - drone-cache:/var/lib/docker
+
   docker:
     image: plugins/docker
     repo: justinbarrick/docker-cache
