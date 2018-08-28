@@ -30,10 +30,3 @@ pipeline:
       - docker/
     volumes:
       - drone-cache:/build/build/docker
-
-  cleanup-volumes:
-    image: docker
-    commands:
-      - docker volume rm drone-cache
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
