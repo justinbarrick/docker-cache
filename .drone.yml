@@ -3,7 +3,7 @@ pipeline:
     image: plugins/s3-cache:1
     pull: true
     endpoint: http://codesink-cache.nyc3.digitaloceanspaces.com
-    secrets: [access_key, secret_key]
+    secrets: [aws_access_key_id, aws_secret_access_key]
     restore: true
     volumes:
       - docker-cache:/var/lib/docker
@@ -20,8 +20,9 @@ pipeline:
     image: plugins/s3-cache:1
     pull: true
     endpoint: http://codesink-cache.nyc3.digitaloceanspaces.com
-    secrets: [access_key, secret_key]
+    secrets: [aws_access_key_id, aws_secret_access_key]
     rebuild: true
+    debug: true
     mount:
       - docker-cache
     volumes:
@@ -31,6 +32,6 @@ pipeline:
     image: plugins/s3-cache:1
     pull: true
     endpoint: http://codesink-cache.nyc3.digitaloceanspaces.com
-    secrets: [access_key, secret_key]
+    secrets: [aws_access_key_id, aws_secret_access_key]
     flush: true
     flush_age: 14
