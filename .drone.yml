@@ -36,4 +36,4 @@ pipeline:
     commands:
       - docker volume rm drone-cache
     volumes:
-      - /var/lib/docker.sock:/var/lib/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
