@@ -12,13 +12,6 @@ pipeline:
     volumes:
       - drone-cache:/build/build/docker
 
-  test:
-    image: alpine
-    commands:
-      - ls docker/
-    volumes:
-      - drone-cache:/build/build/docker
-
   docker:
     image: plugins/docker
     repo: justinbarrick/docker-cache
@@ -37,3 +30,10 @@ pipeline:
       - docker/
     volumes:
       - drone-cache:/build/build/docker
+
+  cleanup-volumes:
+    image: docker
+    commands:
+      - docker volume rm drone-cache
+    volumes:
+      - /var/lib/docker.sock:/var/lib/docker.sock
