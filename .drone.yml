@@ -1,7 +1,6 @@
 pipeline:
   restore-cache:
     image: plugins/s3-cache:1
-    pull: true
     endpoint: https://build-cache.codesink.net
     access_key: minio
     secret_key: minio123
@@ -13,6 +12,9 @@ pipeline:
     image: alpine
     commands:
       - ls /var/lib/docker
+      - ls hello/ || :
+      - mkdir hello
+      - echo hi > hello/hi
     volumes:
       - drone-cache:/var/lib/docker
 
@@ -26,12 +28,12 @@ pipeline:
 
   rebuild-cache:
     image: plugins/s3-cache:1
-    pull: true
     endpoint: https://build-cache.codesink.net
     access_key: minio
     secret_key: minio123
     rebuild: true
     mount:
       - /var/lib/docker
+      - hello/
     volumes:
       - drone-cache:/var/lib/docker
