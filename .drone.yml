@@ -7,7 +7,7 @@ pipeline:
     secret_key: minio123
     restore: true
     volumes:
-      - /var/lib/docker
+      - drone-cache:/var/lib/docker
 
   docker:
     image: plugins/docker
@@ -15,7 +15,7 @@ pipeline:
     secrets: [docker_username, docker_password]
     tags: latest
     volumes:
-      - /var/lib/docker
+      - drone-cache:/var/lib/docker
 
   rebuild-cache:
     image: plugins/s3-cache:1
@@ -27,4 +27,4 @@ pipeline:
     mount:
       - /var/lib/docker
     volumes:
-      - /var/lib/docker
+      - drone-cache:/var/lib/docker
