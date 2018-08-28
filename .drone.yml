@@ -1,3 +1,7 @@
+workspace:
+  base: /build
+  path: build
+
 pipeline:
   restore-cache:
     image: plugins/s3-cache:1
@@ -6,14 +10,14 @@ pipeline:
     secret_key: minio123
     restore: true
     volumes:
-      - drone-cache:docker
+      - drone-cache:/build/build/docker
 
   test:
     image: alpine
     commands:
       - ls docker/
     volumes:
-      - drone-cache:docker
+      - drone-cache:/build/build/docker
 
   docker:
     image: plugins/docker
@@ -32,4 +36,4 @@ pipeline:
     mount:
       - docker/
     volumes:
-      - drone-cache:docker
+      - drone-cache:/build/build/docker
