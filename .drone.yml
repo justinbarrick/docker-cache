@@ -1,0 +1,36 @@
+pipeline:
+  restore-cache:
+    image: plugins/s3-cache:1
+    pull: true
+    endpoint: http://codesink-cache.nyc3.digitaloceanspaces.com
+    secrets: [access_key, secret_key]
+    restore: true
+    volumes:
+      - docker-cache:/var/lib/docker
+
+  docker:
+    image: plugins/docker
+    repo: justinbarrick/docker-cache
+    secrets: [docker_username, docker_password]
+    tags: latest
+    volumes:
+      - docker-cache:/var/lib/docker
+
+  rebuild-cache:
+    image: plugins/s3-cache:1
+    pull: true
+    endpoint: http://codesink-cache.nyc3.digitaloceanspaces.com
+    secrets: [access_key, secret_key]
+    rebuild: true
+    mount:
+      - docker-cache
+    volumes:
+      - docker-cache:/var/lib/docker
+
+  flush_cache:
+    image: plugins/s3-cache:1
+    pull: true
+    endpoint: http://codesink-cache.nyc3.digitaloceanspaces.com
+    secrets: [access_key, secret_key]
+    flush: true
+    flush_age: 14
