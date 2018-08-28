@@ -6,17 +6,14 @@ pipeline:
     secret_key: minio123
     restore: true
     volumes:
-      - drone-cache:/var/lib/docker
+      - drone-cache:docker
 
   test:
     image: alpine
     commands:
-      - ls /var/lib/docker
-      - "ls hello/ || :"
-      - mkdir hello
-      - echo hi > hello/hi
+      - ls docker/
     volumes:
-      - drone-cache:/var/lib/docker
+      - drone-cache:docker
 
   docker:
     image: plugins/docker
@@ -33,7 +30,6 @@ pipeline:
     secret_key: minio123
     rebuild: true
     mount:
-      - /var/lib/docker
-      - hello/
+      - docker/
     volumes:
-      - drone-cache:/var/lib/docker
+      - drone-cache:docker
